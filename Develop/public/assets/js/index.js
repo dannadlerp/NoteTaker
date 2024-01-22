@@ -1,3 +1,4 @@
+import fs from "fs";
 let noteTitle;
 let noteText;
 let saveNoteBtn;
