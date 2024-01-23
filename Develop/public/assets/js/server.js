@@ -4,15 +4,15 @@ const app = express();
 const path = require('path');
 const PORT =process.env.PORT || 3001; //check for environmental PORT or default to 3001
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.get('/', (req, res) =>{
+app.get('/', (req, res) =>{ //define what to do when using GET method
     res.send(console.log('not server running'))
 })
 
-app.listen(PORT, () =>
+app.listen(PORT, () => //listening for port
   console.log(`Serving static asset routes at http://localhost:${PORT}!`)
 );
 
@@ -21,7 +21,7 @@ app.listen(PORT, () =>
 
 const dbFilePath = `${__dirname}/db.json`; //defining path for database
 
-const readNotes = async () => {  //function to read notes from db
+const readNotes =  () => {  //function to read notes from db
   try {
     const data = fs.readFile(dbFilePath, 'utf8');   //readfile function from fs
     return JSON.parse(data);
@@ -30,27 +30,27 @@ const readNotes = async () => {  //function to read notes from db
   }
 };
 
-const writeNotes = async (notes) => {
+const writeNotes =  (notes) => {
   fs.writeFile(dbFilePath, JSON.stringify(notes), 'utf8');
 };
 
-app.get('/api/notes', async (req, res) => {
+app.get('/api/notes',  (req, res) => {
   const notes = await readNotes();
   res.json(notes);
   console.log("retrieved from db");
 });
 
-app.post('/api/notes', async (req, res) => {
+app.post('/api/notes',  (req, res) => {
   const newNote = req.body;
   const notes = await readNotesFromFile();
-  newNote.id = Date.now(); // Assign a unique ID (this could be more sophisticated)
+  newNote.id = Date.now();
   notes.push(newNote);
   writeNotesToFile(notes);
   res.json(newNote);
   console.log("posted to db");
 });
 
-/* app.delete('/api/notes/:id', async (req, res) => {
+/* app.delete('/api/notes/:id',  (req, res) => {
   const noteId = parseInt(req.params.id);
   const notes = await readNotes();
   const updatedNotes = notes.filter((note) => note.id !== noteId);
