@@ -1,4 +1,4 @@
-CREATE DATABASE notetaker_db;
+CREATE DATABASE notes_db;
 USE notetaker_db;
 
 CREATE TABLE NOTES (

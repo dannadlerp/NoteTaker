@@ -3,6 +3,7 @@ const fs = require("fs");
 const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 3001; //set to 3001 if none exist
+const Notes = require('../../../api/notes');
 
 app.use(express.urlencoded({ extended: true }));  //current version of express requires the extended option to be present
 app.use(express.json());
@@ -14,12 +15,12 @@ app.listen(PORT, () =>
 console.log(`Serving static asset routes at http://localhost:${PORT}`)
 );
 
-const dbFilePath = `${__dirname}/db.json`; //defining path for database
+const dbFilePath = `../../../db/db.json`;
 //console.log(`${dbFilePath}`);
 function readNotes() {
   //function to read notes from db
   try {
-    const data = fs.readFile(dbFilePath, (err, data) => {
+    const data = fs.reaFile(dbFilePath, (err, data) => {
       if (err) {
         console.log(`error: ${err}`);
       } else {
@@ -48,10 +49,10 @@ const writeNotes = (notes) => { //writefile function from fs
   }
 };
 
-app.get("/api/notes", (req, res) => {
-  res.send("retrieved all from db");  //cannot have 2 "res." commands in same .get
+app.get("/api/notes", async (req, res) => {
+  //res.send("retrieved all from db");  //cannot have 2 "res." commands in same .get
   const notes = readNotes();
-  //res.json(notes);
+  res.json({message: "notes retrieved", notes});
   
 });
 
