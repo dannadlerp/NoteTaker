@@ -49,10 +49,10 @@ const writeNotes = (notes) => { //writefile function from fs
 };
 
 app.get("/api/notes", (req, res) => {
-  //res.send("retrieved all from db");  cannot have 2 "res." commands in same .get
+  res.send("retrieved all from db");  //cannot have 2 "res." commands in same .get
   const notes = readNotes();
-  res.json(notes);
-  console.log("retrieved all from db");
+  //res.json(notes);
+  
 });
 
 app.post("/api/notes", (req, res) => {

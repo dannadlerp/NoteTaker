@@ -110,6 +110,7 @@ const handleNewNoteView = (e) => {
   renderActiveNote();
 };
 
+//only shows save button if text is entered
 const handleRenderSaveBtn = () => {
   if (!noteTitle.value.trim() || !noteText.value.trim()) {
     hide(saveNoteBtn);
