@@ -43,7 +43,7 @@ const writeNotes = (notes) => { //writefile function from fs
         console.log(`Data is: ${data}`);
       }
     }); 
-    return JSON.parse(data);
+    return JSON.parse(data); //pass data through json to make readable
   } catch (error) {
     console.error(`Error: ${error}`);
   }
