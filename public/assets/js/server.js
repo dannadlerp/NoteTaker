@@ -1,10 +1,12 @@
 const express = require("express");
+const mysql = require('mysql2');
 const fs = require("fs");
 const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 3001; //set to 3001 if none exist
 const Notes = require('../../../api/notes');
 
+//express middleware
 app.use(express.urlencoded({ extended: true }));  //current version of express requires the extended option to be present
 app.use(express.json());
 app.use(express.static("public"));
@@ -49,6 +51,14 @@ const writeNotes = (notes) => { //writefile function from fs
   }
 };
 
+app.get("/*", (req, res) => { //retrieves landingpage when * is called
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get("/notes", (req, res) => { //retrieves notes page when /notes is called
+  res.sendFile(path.join(__dirname, 'public', 'notes.html'));
+});
+
 app.get("/api/notes", async (req, res) => {
   //res.send("retrieved all from db");  //cannot have 2 "res." commands in same .get
   const notes = readNotes();
@@ -74,7 +84,7 @@ app.delete('/api/notes/:id',  (req, res) => {
   writeNotes(updatedNotes);
   res.json({ success: true });
   //res.send("deleted from db");
-  console.log("deleted from db");
+  
 });
 
 app.get("/", (req, res) => {

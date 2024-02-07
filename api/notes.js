@@ -1,7 +1,8 @@
-const sequelize = require('../config/connection');
 const { Model, DataTypes} = require('sequelize');
 const path = require('path');
 const fs = require('fs');
+//const sequelize = require("sequelize");
+const sequelize = require('../config/connection.js');
 
 class Notes extends Model {}
 
@@ -29,8 +30,7 @@ Notes.init(
     }
   },
   {
-    sequelize,
-    freezeTableName: true,
+    sequelize, //TODO need to resolve sequelize instance issue
     modelName: 'notes',
   }
 );
@@ -42,7 +42,7 @@ const jsonData = JSON.parse(data);
 
 jsonData.forEach(async (note) => {
   try {
-    await Notes.create({
+     await Notes.create({
       note_title: note.title,
       note_text: note.text,
     });

@@ -1,5 +1,5 @@
 CREATE DATABASE notes_db;
-USE notetaker_db;
+USE notes_db;
 
 CREATE TABLE NOTES (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

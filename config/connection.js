@@ -9,9 +9,12 @@ if (process.env.DB_HOST) {
     process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
-      host: process.env.DB_HOST, // Use DB_HOST from environment variables
-      dialect: process.env.DB_DIALECT, // Use DB_DIALECT from environment variables
-      port: process.env.DB_PORT // Use DB_PORT from environment variables if it's defined
+      //use the following from .env file
+      host: process.env.DB_HOST,
+      dialect: process.env.DB_DIALECT,
+      port: process.env.DB_PORT,
+      database: DB_NAME,
+      Storage: "../db/db.json"
     }
   );
 } else {
