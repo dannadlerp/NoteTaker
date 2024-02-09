@@ -1,8 +1,0 @@
-CREATE DATABASE notes_db;
-USE notes_db;
-
-CREATE TABLE NOTES (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  note_title VARCHAR(255) NOT NULL,
-  note_body VARCHAR(255)
-);
