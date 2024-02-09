@@ -30,7 +30,6 @@ router.delete('/api/notes/:id',  (req, res) => {
   const updatedNotes = notes.filter((note) => note.id !== noteId);
   writeNotes(updatedNotes);
   res.json({ success: true });
-  //res.send("deleted from db");
   
 });
 
@@ -38,63 +37,10 @@ router.get("/", (req, res) => {
   //define what to do when using GET method
   res.send("server running");
 });
-/* app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);  //having this app.listen at end of code was causing "addressinuse" errors with the port being busy
-}); */
 
-
-const { Model, DataTypes} = require('sequelize');
-const path = require('path');
-const fs = require('fs');
-//const sequelize = require("sequelize");
-const sequelize = require('../config/connection.js');
-
-class Notes extends Model {}
-
-Notes.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      
-    },
-    note_title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-      len: [1, 255],
-      },
-    },
-    note_text: {
-      type: DataTypes.STRING,
-      validate: {
-        len: [1, 255],
-      }
-    }
-  },
-  {
-    sequelize, //TODO need to resolve sequelize instance issue
-    modelName: 'notes',
-  }
-);
-
-// Read data from db.json
-const dbFilePath = "../../../db/db.json";
-const data = fs.readFileSync(dbFilePath, "utf8");
-const jsonData = JSON.parse(data);
-
-jsonData.forEach(async (note) => {
-  try {
-     await Notes.create({
-      note_title: note.title,
-      note_text: note.text,
-    });
-  } catch (error) {
-    console.error('Error inserting data into database:', error);
-  }
+router.get('/api/notes/',  (req, res) => {
+  const notes = readNotes();
+  res.json({ success: true });
 });
 
-module.exports = Notes;
-
+module.exports = router;

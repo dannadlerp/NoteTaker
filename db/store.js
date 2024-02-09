@@ -8,15 +8,15 @@ const fs = require("fs");
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 class Store {
-  read() {
+  readNotes() { //no argument needed as it just reads whatever i passed through
     return readFileAsync("db/db.json", "utf8");
   }
-  write(note) {
-    //argument because item exists to write
+  writeNotes(note) {
+    //argument because item exists to writeNotes
     return writeFileAsync("db/db.json", JSON.stringify(note)); //has to be sent as raw data
   }
   getNotes() {
-    return this.read().then((notes) => {
+    return this.readNotes().then((notes) => {
       let parseNotes;
       try {
         parseNotes = [].concat(JSON.parse(notes));
@@ -37,7 +37,7 @@ module.exports = new Store();
 /* const dbFilePath = `../../../db/db.json`;
 //console.log(`${dbFilePath}`);
 function readNotes() {
-  //function to read notes from db
+  //function to readNotes notes from db
   try {
     const data = fs.reaFile(dbFilePath, (err, data) => {
       if (err) {

@@ -16,9 +16,6 @@ app.use("/", htmlRoutes)
 
 
 
-
-
-
 app.listen(PORT, () =>
 //listening for port
 console.log(`Serving static asset routes at http://localhost:${PORT}`)
