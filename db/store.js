@@ -11,9 +11,9 @@ class Store {
   readNotes() { //no argument needed as it just reads whatever i passed through
     return readFileAsync("db/db.json", "utf8");
   }
-  writeNotes(note) {
+  writeNotes(notes) {
     //argument because item exists to writeNotes
-    return writeFileAsync("db/db.json", JSON.stringify(note)); //has to be sent as raw data
+    return writeFileAsync("db/db.json", JSON.stringify(notes)); //has to be sent as raw data
   }
   getNotes() {
     return this.readNotes().then((notes) => {
@@ -26,8 +26,23 @@ class Store {
       return parseNotes; //so it can be used in other func.
     });
   }
-  addNotes(note) {}//has to have note bc nothing exists yet
-  removeNotes
+  addNotes(note) {//has to have note bc nothing exists yet
+  return this.readNotes().then((notes) => {
+    let parseNotes;
+    try {
+      this.writeNotes(note)
+      parseNotes = JSON.parse(notes);
+      parseNotes.push(note);
+      return this.writeNotes(parseNotes); //write the updated notes
+    } catch (error) {
+      console.error(`error: ${error}`);
+      return [];
+    }
+    return parseNotes; //so it can be used in other func.
+  });
+}
+  
+  //removeNotes
 
 
 }
