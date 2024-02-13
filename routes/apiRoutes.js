@@ -1,5 +1,7 @@
 const router = require("express").Router(); //traffic cop :)
 const store = require("../db/store.js");
+
+
 router.get("/api/notes", (req, res) => {
   //res.send("retrieved all from db");  //cannot have 2 "res." commands in same .get
   
@@ -25,6 +27,8 @@ newNote.id = ++noteIdCounter;
   });
   
 router.delete('/api/notes/:id',  (req, res) => {
+  const newNote = req.body;
+newNote.id = --noteIdCounter;
   const noteId = parseInt(req.params.id);
   const notes = readNotes();
   const updatedNotes = notes.filter((note) => note.id !== noteId);
@@ -33,10 +37,10 @@ router.delete('/api/notes/:id',  (req, res) => {
   
 });
 
-router.get("/", (req, res) => {
+/* router.get("/", (req, res) => {
   //define what to do when using GET method
   res.send("server running");
-});
+}); */
 
 router.get('/api/notes/',  (req, res) => {
   const notes = readNotes();
