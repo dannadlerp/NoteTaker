@@ -13,16 +13,24 @@ router.get("/api/notes", (req, res) => {
   
 });
 
+let noteIdCounter = 0;
 router.post("/api/notes", (req, res) => {
   const newNote = req.body;
 newNote.id = ++noteIdCounter;
-  const notes = readNotes();
+store.addNotes(newNote).then ((note) => {
+  res.json(note);
+}) //pass the request body through the addNotes funct
+
+.catch((err) => {
+  console.error(err);
+  res.status(500).json({ error: `error: ${err}`});
+});
+  const notes = this.readNotes();
     notes.push(newNote);
     writeNotes(notes);
     res.json(newNote);
-    //  res.send("posted to db");
     console.log("posted to db");
-  });
+});
   
 router.delete('/api/notes/:id',  (req, res) => {
   const noteId = parseInt(req.params.id);

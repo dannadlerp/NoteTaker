@@ -6,12 +6,23 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+const fetchNotes = () => {
+  fetch(`http://localhost:3001/api/notes`)
+   .then(function (response) {
+      const returnedRes = response.json();
+      //return returnedRes;
+      console.log(returnedRes)
+   })
+}
+
+
 if (window.location.pathname === "/notes") {
   noteTitle = document.querySelector(".note-title");
   noteText = document.querySelector(".note-textarea");
   saveNoteBtn = document.querySelector(".save-note");
   newNoteBtn = document.querySelector(".new-note");
   noteList = document.querySelectorAll(".list-container .list-group");
+  fetchNotes()
 }
 
 // Show an element

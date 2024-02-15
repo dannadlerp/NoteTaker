@@ -34,11 +34,11 @@ class Store {
       parseNotes = JSON.parse(notes);
       parseNotes.push(note);
       return this.writeNotes(parseNotes); //write the updated notes
+      return parseNotes; //so it can be used in other func.
     } catch (error) {
       console.error(`error: ${error}`);
       return [];
     }
-    return parseNotes; //so it can be used in other func.
   });
 }
   
