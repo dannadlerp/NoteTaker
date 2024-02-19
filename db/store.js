@@ -3,20 +3,20 @@ const util = require("util");
 const fs = require("fs");
 
 //TODO look it up :)
-//const uuid = require("uuid/v1")
+const uuidv1 = require("uuid/v1")
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 class Store {
-  readNotes() { //no argument needed as it just reads whatever i passed through
+  read() { //no argument needed as it just reads whatever i passed through
     return readFileAsync("db/db.json", "utf8");
   }
-  writeNotes(notes) {
+  write(note) {
     //argument because item exists to writeNotes
-    return writeFileAsync("db/db.json", JSON.stringify(notes)); //has to be sent as raw data
+    return writeFileAsync("db/db.json", JSON.stringify(note)); //has to be sent as raw data
   }
   getNotes() {
-    return this.readNotes().then((notes) => {
+    return this.read().then((notes) => {
       let parseNotes;
       try {
         parseNotes = [].concat(JSON.parse(notes));
@@ -27,24 +27,17 @@ class Store {
     });
   }
   addNotes(note) {//has to have note bc nothing exists yet
-  return this.readNotes().then((notes) => {
-    let parseNotes;
-    try {
-      this.writeNotes(note)
-      parseNotes = JSON.parse(notes);
-      parseNotes.push(note);
-      return this.writeNotes(parseNotes); //write the updated notes
-      return parseNotes; //so it can be used in other func.
-    } catch (error) {
-      console.error(`error: ${error}`);
-      return [];
-    }
-  });
+    const {title,text} = note;
+    const newNote = {title, text, id:uuidv1()}
+  return this.getNotes().then((notes) => [...notes,newNote]).then((updatedNotes) => this.write(updatedNotes))
+  .then(() => newNote);
 }
-  
-  //removeNotes
-
-
+removeNote(id) {
+  // Get all notes, remove the note with the given id, write the filtered notes
+  return this.getNotes()
+    .then((notes) => notes.filter((note) => note.id !== id))
+    .then((filteredNotes) => this.write(filteredNotes));
+}
 }
 
 module.exports = new Store();

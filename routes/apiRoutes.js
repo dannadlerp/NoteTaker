@@ -2,7 +2,7 @@ const router = require("express").Router(); //traffic cop :)
 const store = require("../db/store.js");
 
 
-router.get("/api/notes", (req, res) => {
+router.get("/notes", (req, res) => {
   //res.send("retrieved all from db");  //cannot have 2 "res." commands in same .get
   
   store
@@ -15,10 +15,10 @@ router.get("/api/notes", (req, res) => {
   
 });
 
-let noteIdCounter = 0;
-router.post("/api/notes", (req, res) => {
+//let noteIdCounter = 0;
+router.post("/notes", (req, res) => {
   const newNote = req.body;
-newNote.id = ++noteIdCounter;
+//newNote.id = ++noteIdCounter;
 store.addNotes(newNote).then ((note) => {
   res.json(note);
 }) //pass the request body through the addNotes funct
@@ -27,22 +27,27 @@ store.addNotes(newNote).then ((note) => {
   console.error(err);
   res.status(500).json({ error: `error: ${err}`});
 });
-  const notes = this.readNotes();
+  /* const notes = this.readNotes();
     notes.push(newNote);
     writeNotes(notes);
     res.json(newNote);
-    console.log("posted to db");
+    console.log("posted to db"); */
 });
   
-router.delete('/api/notes/:id',  (req, res) => {
-  const newNote = req.body;
+router.delete('/notes/:id',  (req, res) => {
+  /* const newNote = req.body;
 newNote.id = --noteIdCounter;
   const noteId = parseInt(req.params.id);
   const notes = readNotes();
   const updatedNotes = notes.filter((note) => note.id !== noteId);
   writeNotes(updatedNotes);
   res.json({ success: true });
-  
+   */
+  store
+    .removeNote(req.params.id)
+    .then(() => res.json({ ok: true }))
+    .catch((err) => res.status(500).json(err));
+
 });
 
 /* router.get("/", (req, res) => {
