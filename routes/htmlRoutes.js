@@ -7,6 +7,6 @@ router.get("/notes", (req, res) => { //retrieves notes page when /notes is calle
 });
 
 router.get("*", (req, res) => { //retrieves landingpage when * is called
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+    res.sendFile(path.join(__dirname, '../index.html'));
   });
   module.exports = router;
