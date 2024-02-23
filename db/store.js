@@ -2,7 +2,6 @@
 const util = require("util");
 const fs = require("fs");
 
-//TODO look it up :)
 const uuidv1 = require("uuid/v1")
 
 const readFileAsync = util.promisify(fs.readFile);
@@ -41,38 +40,3 @@ removeNote(id) {
 }
 
 module.exports = new Store();
-
-/* const dbFilePath = `../../../db/db.json`;
-//console.log(`${dbFilePath}`);
-function readNotes() {
-  //function to readNotes notes from db
-  try {
-    const data = fs.reaFile(dbFilePath, (err, data) => {
-      if (err) {
-        console.log(`error: ${err}`);
-      } else {
-        console.log(`Data is: ${data}`);
-      }
-    }); //readfile function from fs
-    return JSON.parse(data);
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-}
-let noteIdCounter = 0;
-const writeNotes = (notes) => {
-  //writefile function from fs
-  try {
-    fs.writeFile(dbFilePath, (err, data) => {
-      if (err) {
-        console.log(`error: ${err}`);
-      } else {
-        console.log(`Data is: ${data}`);
-      }
-    });
-    return JSON.parse(data); //pass data through json to make readable
-  } catch (error) {
-    console.error(`Error: ${error}`);
-  }
-};
- */
