@@ -11,6 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  //current version of express requires the extended option to be present
 app.use(express.static("public"));
 
+// Serve index.html from the root directory
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
+
 app.use("/api", apiRoutes)
 app.use("/", htmlRoutes)
 
